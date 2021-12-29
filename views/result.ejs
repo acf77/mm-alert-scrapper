@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script defer src="public/assets/scrape-results-script.js"></script>
+    <link rel="stylesheet" href="public/assets/scrape-results-style.css" />
+    <link rel="icon" href="public/assets/pp-icon.ico">
+    <title>MM Salesforce Template</title>
+  </head>
+  
+  <body>
+    <div class="title-container">
+      <img alt="paypal-logo" src="https://upload.wikimedia.org/wikipedia/donate/0/02/Paypal-logo-white.svg" />
+      <h1>Salesforce escalation template</h1>
+    </div>
+    <div class="default-container">
+      <div class="input-list">
+        <h2 class="model-type" id="default-email">Default email</h2>
+        <p class="input-title">Engineer's name</p>
+        <input id="eng-name" type="text" />
+        <p class="input-title">Alert ID</p>
+        <input id="alert-id" type="text" value="<%- alertId %>" />
+        <p class="input-title">Merchant's name</p>
+        <input id="mer-name" type="text" value="<%- merchantName %>" />
+        <p class="input-title">Merchant's ID</p>
+        <input id="mer-id" type="text" value="<%- merchantId %>" />
+        <p class="input-title">CSM's name</p>
+        <input id="csm-name" type="text" />
+        <p class="input-title">Issue description</p>
+        <textarea id="issue-desc" type="text"></textarea>
+        <p class="input-title">Impact</p>
+        <textarea id="impact" type="text"></textarea>
+        <p class="input-title">How to resolve it</p>
+        <textarea id="how-resolve" type="text"></textarea>
+      </div>
+      <div class="default-result">
+        <span><i>Email subject</i></span>
+        <h4>
+          MTS Monitoring for alert ID <span id="span-id"></span> for Merchant
+          <span id="span-mer"></span>
+        </h4>
+        <span><i>Email content</i></span>
+        <p>Dear <span id="span-csm-name"></span>, I hope you're doing well.</p>
+        <p>
+          This is <span id="span-eng-name"></span> from MTS Global Monitoring
+          Team. It has come to our attention that one of your merchants have
+          being processing with an unexpected behavior, please review the
+          information below.
+        </p>
+        <p><strong>Merchant Name:</strong> <span id="span-mer-name"></span></p>
+        <p>
+          <strong>Merchant Account Number:</strong>
+          <span id="span-mer-id"></span>
+        </p>
+        <p>Please see the details below:</p>
+        <p>
+          <strong>Issue description:</strong> <span id="span-issue-desc"></span>
+        </p>
+        <p><strong>Impact:</strong> <span id="span-impact"></span></p>
+        <p>
+          <strong>How to resolve it:</strong>
+          <span id="span-how-resolve"></span>
+        </p>
+        <p>
+          We recommend you get in touch with the merchant to resolve the
+          behavior. Please let us know if you have further questions about it.
+        </p>
+        </br>
+        <a id="new-ticket-sf" target="_blank"
+          href="https://goto.lightning.force.com/lightning/o/Case/new?count=1&nooverride=1&useRecordTypeCheck=1&navigationLocation=LIST_VIEW">Create
+          new ticket</a>
+  
+      </div>
+    </div>
+    <div class="expiration-container">
+  
+      <div class="default-container">
+        <div class="input-list">
+          <h2 class="model-type" id="certificate-expiration">Certificate expiration</h2>
+          <p class="input-title">Engineer's name</p>
+          <input id="exp-eng-name" type="text" />
+  
+          <p class="input-title">Merchant's name</p>
+          <input id="exp-mer-name" type="text" value="<%- merchantName %>"/>
+          <p class="input-title">Merchant's ID</p>
+          <input id="exp-mer-id" type="text" value="<%- merchantId %>" />
+          <p class="input-title">CSM's name</p>
+          <input id="exp-csm-name" type="text" />
+          <p class="input-title">Expiration date</p>
+          <input id="exp-date" type="date" />
+  
+        </div>
+        <div class="default-result">
+          <span><i>Email subject</i></span>
+          <h4>
+            Certificate Expiration alert for Merchant <span id="span-exp-mer-name"></span> ID <span
+              id="span-exp-mer-id"></span>
+          </h4>
+          <span><i>Email content</i></span>
+          <p>Dear <span id="span-exp-csm-name"></span>, I hope you're doing well.</p>
+          <p>
+            This is <span id="span-exp-eng-name"></span> from MTS Global Monitoring
+            Team. This is a courtesy notification to inform you that the API Certificate on your Managed Account will
+            expire in <strong><span id="span-exp-date"></span></strong>
+          </p>
+          <p>We recommend you communicating the merchant that if they are no longer using this API certificate for their
+            integration, no further action is needed.
+  
+            If they are, they will need to renew and update their platform/servers prior to the date mentioned above or
+            their transaction processing will stop.
+            </br>
+            </br>
+            Here is how to do so:
+            </br>
+            </br>
+            1. Log into your PayPal account;
+            </br>
+            2. Click name/business name in the upper right corner and click "Account Settings" from the menu;
+            </br>
+            3. Click "Website Payments" on the left side of the page;
+            </br>
+            4. Click "Update" next to the API acces;
+            </br>
+            5. Under NVP/SOAP API integration (Classic), click "Manage API Credentials";
+            </br>
+            6. Click "Renew" (if Renew is not there you will need to remove your certificate before requesting a new one
+            instead).
+            </br>
+            </br>
+            Plese let us know if you have any further questions about it.
+          </p>
+        </div>
+      </div>
+  
+    </div>
+
+
+
+  </body>
+
+</html>
