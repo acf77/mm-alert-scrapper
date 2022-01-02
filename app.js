@@ -67,4 +67,4 @@ app.post("/scrape", urlEncodedParser, (req, res) => {
   }
 });
 
-app.listen(8080, () => console.log("Server started!"));
+app.listen(process.env.PORT || 8080, () => console.log("Server started!"));
