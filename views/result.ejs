@@ -11,133 +11,266 @@
   </head>
   
   <body>
+    <div class="copy-popup">Text copied to clipboard!</div>
+  
     <div class="title-container">
-      <img alt="paypal-logo" src="https://upload.wikimedia.org/wikipedia/donate/0/02/Paypal-logo-white.svg" />
+      <img  class="logo" alt="paypal-logo" src="public/assets/atl.site.logo" />
       <h1>Salesforce escalation template</h1>
+      <ul>
+        <li><a href="#nav-default">Default email</a></li>
+        <li><a href="#nav-certificate">Certificate Expiration</a></li>
+        <li><a href="#nav-webhook">Webhook failure</a></li>
+        <li></li>
+        <li></li>
+      </ul>
     </div>
-    <div class="default-container">
-      <div class="input-list">
-        <h2 class="model-type" id="default-email">Default email</h2>
-        <p class="input-title">Engineer's name</p>
-        <input id="eng-name" type="text" />
-        <p class="input-title">Alert ID</p>
-        <input id="alert-id" type="text" value="<%- alertId %>" />
-        <p class="input-title">Merchant's name</p>
-        <input id="mer-name" type="text" value="<%- merchantName %>" />
-        <p class="input-title">Merchant's ID</p>
-        <input id="mer-id" type="text" value="<%- merchantId %>" />
-        <p class="input-title">CSM's name</p>
-        <input id="csm-name" type="text" />
-        <p class="input-title">Issue description</p>
-        <textarea id="issue-desc" type="text"></textarea>
-        <p class="input-title">Impact</p>
-        <textarea id="impact" type="text"></textarea>
-        <p class="input-title">How to resolve it</p>
-        <textarea id="how-resolve" type="text"></textarea>
-      </div>
-      <div class="default-result">
-        <span><i>Email subject</i></span>
-        <h4>
-          MTS Monitoring for alert ID <span id="span-id"></span> for Merchant
-          <span id="span-mer"></span>
-        </h4>
-        <span><i>Email content</i></span>
-        <p>Dear <span id="span-csm-name"></span>, I hope you're doing well.</p>
-        <p>
-          This is <span id="span-eng-name"></span> from MTS Global Monitoring
-          Team. It has come to our attention that one of your merchants have
-          being processing with an unexpected behavior, please review the
-          information below.
-        </p>
-        <p><strong>Merchant Name:</strong> <span id="span-mer-name"></span></p>
-        <p>
-          <strong>Merchant Account Number:</strong>
-          <span id="span-mer-id"></span>
-        </p>
-        <p>Please see the details below:</p>
-        <p>
-          <strong>Issue description:</strong> <span id="span-issue-desc"></span>
-        </p>
-        <p><strong>Impact:</strong> <span id="span-impact"></span></p>
-        <p>
-          <strong>How to resolve it:</strong>
-          <span id="span-how-resolve"></span>
-        </p>
-        <p>
-          We recommend you get in touch with the merchant to resolve the
-          behavior. Please let us know if you have further questions about it.
-        </p>
-        </br>
-        <a id="new-ticket-sf" target="_blank"
-          href="https://goto.lightning.force.com/lightning/o/Case/new?count=1&nooverride=1&useRecordTypeCheck=1&navigationLocation=LIST_VIEW">Create
-          new ticket</a>
   
-      </div>
-    </div>
-    <div class="expiration-container">
   
-      <div class="default-container">
-        <div class="input-list">
-          <h2 class="model-type" id="certificate-expiration">Certificate expiration</h2>
-          <p class="input-title">Engineer's name</p>
-          <input id="exp-eng-name" type="text" />
+    <div class='wrapper'>
+    <div>
   
-          <p class="input-title">Merchant's name</p>
-          <input id="exp-mer-name" type="text" value="<%- merchantName %>"/>
-          <p class="input-title">Merchant's ID</p>
-          <input id="exp-mer-id" type="text" value="<%- merchantId %>" />
-          <p class="input-title">CSM's name</p>
-          <input id="exp-csm-name" type="text" />
-          <p class="input-title">Expiration date</p>
-          <input id="exp-date" type="date" />
+      <div class="default-main-container">
+        <h2 class="model-type" id="nav-default">Default email</h2>
   
+        <div class="default-container">
+          <div class="input-list input-list-default">
+            <div class="top-input-row">
+              <div>
+                <div class="single-input-group">
+                  <p class="input-title">Engineer's name</p>
+                  <input id="eng-name" type="text" tabindex="1"/>
+                </div>
+                <div class="single-input-group">
+                  <p class="input-title">Alert ID</p>
+                  <input id="alert-id" type="text" tabindex="3" value="<%= alertId %>"/>
+                </div>
+                <div class="single-input-group">
+                  <p class="input-title">Merchant's name</p>
+                  <input id="mer-name" type="text" tabindex="5" value="<%= merchantName %>"/>
+                </div>
+              </div>
+              <div>
+                <div class="single-input-group">
+                  <p class="input-title">CSM's name</p>
+                  <input id="csm-name" type="text" tabindex="2"/>
+                </div>
+                <div class="single-input-group">
+                  <p class="input-title">Merchant's ID</p>
+                  <input id="mer-id" type="text" tabindex="4" value="<%= merchantId %>"/>
+                </div>
+              </div>
+            </div>
+            <p class="input-title">Issue description</p>
+            <div class="selection-group">
+              <textarea id="issue-desc" type="text"></textarea>
+              <div style="display: flex; flex-direction: column;">
+                <select name="alert-type-sel" id="alert-type-sel" onChange="selectAlertType(this)">
+                  <option selected="true" style="font-style: italic; color: gray; font-weight: 300;">Type</option>
+                  <option value="Flatline">Flatline</option>
+                  <option value="Success rate drop">Success rate drop</option>
+                  <option value="Volume drop">Volume drop</option>
+                </select>
+                <select name="api-type-sel" id="api-type-sel" onChange="selectApiType(this)">
+                  <option selected="true" style="font-style: italic; color: gray; font-weight: 300;">API</option>
+                  <option value="CreateBillingAgreement">CreateBillingAgreement</option>
+                  <option value="DoAuthorization">DoAuthorization</option>
+                  <option value="DoDirectPayment">DoDirectPayment</option>
+                  <option value="DoDirectPayment">DoExpressCheckoutPayment</option>
+                  <option value="oauth2.token">oauth2.token</option>
+                  <option value="v#.checkout.orders ">v#.checkout.orders </option>
+                  <option value="v1.payments.payment">v1.payments.payment</option>
+                  <option value="v1.payments.payment.*.execute">v1.payments.payment.*.execute</option>
+                </select>
+                <a class="btn-apply" onClick="applyDescChanges()">Apply</a>
+              </div>
+            </div>
+            <p class="input-title">Impact</p>
+            <div class="selection-group">
+              <textarea id="impact" type="text"></textarea>
+              <div style="display: flex; flex-direction: column;">
+                <select name="cars" id="cars">
+                  <option selected="true" style="font-style: italic; color: gray; font-weight: 300;">Impact</option>
+                  <option value="lack-pay">The merchant is not receiving payments since</option>
+                </select>
+                <a class="btn-apply" onClick="applyImpactChanges()">Apply</a>
+              </div>
+            </div>
+            <p class="input-title">How to resolve it</p>
+            <div class="selection-group">
+              <textarea id="how-resolve" type="text"></textarea>
+              <div style="display: flex; flex-direction: column;">
+                <select name="resolution" id="resolution" onChange="selectResolutionType(this)">
+                  <option selected="true" style="font-style: italic; color: gray; font-weight: 300;">Resolution</option>
+                  <option value="processing">Processing</option>
+                  <option value="integration">Integration</option>
+                  <option value="nubisse">Nubisse</option>
+                </select>
+                <a class="btn-apply" onClick="applyResolutionChanges()">Apply</a>
+              </div>
+            </div>
+          </div>
+          <div style="display: flex; flex-direction: column;">
+  
+            <div class="default-result">
+              <span><i>Email subject</i></span>
+              <h4 id="default-email-subject">MTS Monitoring for alert ID <span id="span-id"></span> for Merchant
+                <span id="span-mer"></span>
+                <!-- <img class="copy-icon" src="uu9zlp.svg" onclick='copyText("default-email-subject")'> -->
+              </h4>
+              <span><i>Email content</i></span>
+              <div id="default-email-content">
+                <p>Dear <span id="span-csm-name"></span>, I hope you're doing well.</p>
+                <p>
+                  This is <span id="span-eng-name"></span> from MTS Global Monitoring
+                  Team. It has come to our attention that one of your merchants has
+                  been processing with an unexpected behavior, please review the
+                  information below.
+                </p>
+                <p><strong>Merchant Name:</strong> <span id="span-mer-name"></span></p>
+                <p>
+                  <strong>Merchant Account Number:</strong>
+                  <span id="span-mer-id"></span>
+                </p> 
+                <p>Please see the details below:</p> 
+                <p>
+                  <strong>Issue description:</strong> <span id="span-issue-desc"></span>
+                </p> 
+                <p><strong>Impact:</strong> <span id="span-impact"></span></p> 
+                <p>
+                  <strong>How to resolve it:</strong>
+                  <span id="span-how-resolve"></span>
+                </p> 
+                <p>
+                  We recommend you get in touch with the merchant to resolve the
+                  behavior. Please let us know if you have further questions about it.
+                </p>
+              </div>
+              <div>
+                  <img class="copy-icon" src="public/assets/copy-icon.svg" onclick='copyText("default-email-content")'>
+                </div>
+  
+            </div>
+            <div class="btn-sf-div">
+              <a class="btn-sf" target="_blank"
+                href="https://goto.lightning.force.com/lightning/o/Case/new?count=1&nooverride=1&useRecordTypeCheck=1&navigationLocation=LIST_VIEW&uid=16403727894019838">Create
+                new ticket</a>
+            </div>
+          </div>
         </div>
-        <div class="default-result">
-          <span><i>Email subject</i></span>
-          <h4>
-            Certificate Expiration alert for Merchant <span id="span-exp-mer-name"></span> ID <span
-              id="span-exp-mer-id"></span>
-          </h4>
-          <span><i>Email content</i></span>
-          <p>Dear <span id="span-exp-csm-name"></span>, I hope you're doing well.</p>
-          <p>
-            This is <span id="span-exp-eng-name"></span> from MTS Global Monitoring
-            Team. This is a courtesy notification to inform you that the API Certificate on your Managed Account will
-            expire in <strong><span id="span-exp-date"></span></strong>
-          </p>
-          <p>We recommend you communicating the merchant that if they are no longer using this API certificate for their
-            integration, no further action is needed.
+      </div>
+    </div>
   
-            If they are, they will need to renew and update their platform/servers prior to the date mentioned above or
-            their transaction processing will stop.
-            </br>
-            </br>
-            Here is how to do so:
-            </br>
-            </br>
-            1. Log into your PayPal account;
-            </br>
-            2. Click name/business name in the upper right corner and click "Account Settings" from the menu;
-            </br>
-            3. Click "Website Payments" on the left side of the page;
-            </br>
-            4. Click "Update" next to the API acces;
-            </br>
-            5. Under NVP/SOAP API integration (Classic), click "Manage API Credentials";
-            </br>
-            6. Click "Renew" (if Renew is not there you will need to remove your certificate before requesting a new one
-            instead).
-            </br>
-            </br>
-            Plese let us know if you have any further questions about it.
-          </p>
+    <div class="default-certificate-container">
+      <div>
+        <h2 class="model-type" id="nav-certificate">Certificate expiration</h2>
+        <div class="expiration-container">
+          <div class="input-list">
+            <p class="input-title">Engineer's name</p>
+            <input id="exp-eng-name" type="text" />
+  
+            <p class="input-title">Merchant's name</p>
+            <input id="exp-mer-name" type="text" value="<%= merchantName %>"/>
+            <p class="input-title">Merchant's ID</p>
+            <input id="exp-mer-id" type="text" value="<%= merchantId %>"/>
+            <p class="input-title">CSM's name</p>
+            <input id="exp-csm-name" type="text" />
+            <p class="input-title">Expiration date</p>
+            <input id="exp-date" type="date" />
+  
+          </div>
+          <div class="expiration-result">
+            <span><i>Email subject</i></span>
+            <h4 id="expiration-email-subject">
+              Certificate Expiration alert for Merchant <span id="span-exp-mer-name"></span> ID <span
+                id="span-exp-mer-id"></span>
+              <!-- <img class="copy-icon" src="uu9zlp.svg" onclick='copyText("expiration-email-subject")'> -->
+            </h4>
+            <span><i>Email content</i></span>
+  
+            <div id="expiration-email-content">
+  
+              <p>Dear <span id="span-exp-csm-name"></span>, I hope you're doing well.</p>
+              <p>
+                This is <span id="span-exp-eng-name"></span> from MTS Global Monitoring
+                Team. This is a courtesy notification to inform you that the API Certificate on your Managed Account will
+                expire on <strong><span id="span-exp-date"></span></strong>
+              </p>
+              <p>We recommend communicating the merchant that if they are no longer using this API Certificate for their
+                integration, no further action is needed.
+                <br><br>
+                If they are, they will need to renew and update their platform/servers prior to the date mentioned above
+                or
+                their transaction processing will stop.
+                </br>
+                </br>
+                Here is how they would do so:
+                </br>
+                </br>
+                1. Log into your PayPal account;
+                </br>
+                2. Click name/business name in the upper right corner and click "Account Settings" from the menu;
+                </br>
+                3. Click "Website Payments" on the left side of the page;
+                </br>
+                4. Click "Update" next to the API access;
+                </br>
+                5. Under NVP/SOAP API integration (Classic), click "Manage API Credentials";
+                </br>
+                6. Click "Renew" (if Renew is not there you will need to remove your certificate before requesting a new
+                one
+                instead).
+                </br>
+                </br>
+                Plese let us know if you have any further questions about it.
+                <!-- <img class="copy-icon" src="uu9zlp.svg"> -->
+              </p>
+            </div>
+          </div>
         </div>
+  
       </div>
   
     </div>
-
-
-
+  
+    <div class="default-webhook-container">
+  
+      <div>
+        <h2 class="model-type model-type-webhook" id="nav-webhook">Webhook failure</h2>
+        <div class="webhook-container">
+          <div class="input-list">
+            <p class="input-title">Engineer's name</p>
+            <input id="web-eng-name" type="text" />
+            <p class="input-title">Merchant's name</p>
+            <input id="web-mer-name" type="text" value="<%= merchantName %>"/>
+            <p class="input-title">Merchant's ID</p>
+            <input id="web-mer-id" type="text" value="<%= merchantId %>"/>
+            <p class="input-title">CSM's name</p>
+            <input id="web-csm-name" type="text" />
+  
+          </div>
+          <div class="webhook-result">
+            <span><i>Email subject</i></span>
+            <h4 id="webhook-subject">
+              Notification of webhook failure for Merchant <span id="sub-span-web-mer-name"></span>
+              <!-- <img class="copy-icon" src="uu9zlp.svg" onclick='copyText("webhook-email-subject")'> -->
+            </h4>
+            <span><i>Email content</i></span>
+  
+            <div id="webhook-content">
+              <p>Dear <span id="span-web-csm-name"></span>,</p>
+              <p>This is <span id="span-web-eng-name"></span> from MTS Global Monitoring Team.</p>
+              <p>This is a courtesy message to let you know that the merchant <span id="span-web-mer-name"></span>, ID <span id="span-web-mer-id"></span>, is showing a recurring pattern of Webhook failure.</p>
+              <p>Since this is not a TPV impacting behavior, we did not open a Salesforce ticket. However, we advise you to reach out to the merchant to understand if they are facing any integration problems.</p>
+              <p>Please let us know if you have any questions.</p>
+            </div>
+          </div>
+        </div>
+  
+      </div>
+      
+  
+    </div>
+  </div>
   </body>
 
 </html>
