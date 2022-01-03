@@ -14,6 +14,7 @@
     <form id="link-form" action="/scrape" method="post">
       <input id="link-input" type="text" name="alertLink" />
       <input id="submit-link" type="submit" value="Create template" />
+      <span> <%= errorArray %> </span>
     </form>
 
     <style>
@@ -40,7 +41,7 @@
         color: #fafafa;
       }
 
-      #error-div {
+      span {
         border: 1px;
         border-style: solid;
         border-color: red;
