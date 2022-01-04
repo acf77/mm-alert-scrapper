@@ -11,26 +11,24 @@ app.use("/public", express.static("public"));
 
 app.get("/", (req, res) => res.render("index"));
 
-app.post("/scrape", urlEncodedParser,
+app.post(
+  "/scrape",
+  urlEncodedParser,
   [
     check("alertLink", "You must add an alert link!")
       .exists()
       .isLength({ min: 1 }),
-  ], (req, res) => {
+  ],
+  (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
       const errorArray = errors.array();
-      res.render('index-error', {errorArray: errorArray[0].msg});
+      res.render("index-error", { errorArray: errorArray[0].msg });
     } else {
-      const alertLink = req.body.alertLink + "/merchant";
+      const alertLink = req.body.alertLink;
 
       async function scrape() {
-        const browser = await puppeteer.launch({
-          'args': [
-            '--no-sandbox',
-            '--disable-setuid-sandbox'
-          ]
-        });
+        const browser = await puppeteer.launch({});
         const page = await browser.newPage();
 
         await page.goto(alertLink);
@@ -59,7 +57,7 @@ app.post("/scrape", urlEncodedParser,
 
         browser.close();
 
-        const merchantIdTextclear = merchantIdText.replace(/\s+/g, " ").trim();
+        const merchantIdTextclear = merchantIdText.replace(/\s/g, "").trim();
         const alertIdTextClear = alertIdText.replace("Alert ID:", "").trim();
 
         const alertData = {
@@ -81,4 +79,4 @@ app.post("/scrape", urlEncodedParser,
   }
 );
 
-app.listen(process.env.PORT || 8080, () => console.log("Server started!"));
+app.listen(process.env.PORT || 3000, () => console.log("Server started!"));
