@@ -57,8 +57,8 @@ app.post(
 
         browser.close();
 
-        const merchantIdTextclear = merchantIdText.replace(/\s/g, "").trim();
-        const alertIdTextClear = alertIdText.replace("Alert ID:", "").trim();
+        const merchantIdTextclear = merchantIdText.replace(/\D/g, "").trim();
+        const alertIdTextClear = alertIdText.replace(/\D/g, "").trim();
 
         const alertData = {
           "Merchant name": merchantNameText,
