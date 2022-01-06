@@ -25,7 +25,7 @@ app.post(
       const errorArray = errors.array();
       res.render("index-error", { errorArray: errorArray[0].msg });
     } else {
-      const alertLink = req.body.alertLink;
+      const alertLink = req.body.alertLink + "/merchant";
 
       async function scrape() {
         const browser = await puppeteer.launch({});
